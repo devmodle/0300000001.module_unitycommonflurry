@@ -8,10 +8,10 @@ using FlurrySDK;
 //! 플러리 관리자
 public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	#region 함수
-	//! 유저 식별자를 변경한다
-	public void SetUserID(string a_oID) {
+	//! 분석 유저 식별자를 변경한다
+	public void SetAnalyticsUserID(string a_oID) {
 		CAccess.Assert(a_oID.ExIsValid());
-		CFunc.ShowLog("CFlurryManager.SetUserID: {0}", KCDefine.B_LOG_COLOR_PLUGIN, a_oID);
+		CFunc.ShowLog("CFlurryManager.SetAnalyticsUserID: {0}", KCDefine.B_LOG_COLOR_PLUGIN, a_oID);
 
 		if(this.IsInit) {
 			Flurry.SetUserId(a_oID);
@@ -28,7 +28,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 		CAccess.Assert(a_oParam.ExIsValid());
 
 		this.SendLog(a_oName, new Dictionary<string, string>() {
-			[a_oParam] = a_oDataList.ExToString(KCDefine.U_TOKEN_FLURRY_ANALYTICS_LOG_DATA)
+			[a_oParam] = a_oDataList.ExToString(KCDefine.B_TOKEN_CSV_STRING)
 		});
 	}
 
