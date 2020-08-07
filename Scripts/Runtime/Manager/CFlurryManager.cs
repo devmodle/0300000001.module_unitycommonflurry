@@ -40,7 +40,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 #endif			// #if FLURRY_ANALYTICS_ENABLE
 
 #if MSG_PACK_ENABLE
-			oBuilder.WithDataSaleOptOut(CUserInfoStorage.Instance.UserInfo.IsAgree);
+			oBuilder.WithDataSaleOptOut(CCommonUserInfoStorage.Instance.UserInfo.IsAgree);
 #else
 			oBuilder.WithDataSaleOptOut(false);
 #endif			// #if MSG_PACK_ENABLE
