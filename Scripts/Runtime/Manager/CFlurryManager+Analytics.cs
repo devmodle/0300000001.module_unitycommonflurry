@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-#if FLURRY_ENABLE && FLURRY_ANALYTICS_ENABLE
+#if FLURRY_MODULE_ENABLE && FLURRY_ANALYTICS_ENABLE
 using FlurrySDK;
 
 //! 플러리 관리자
@@ -59,4 +59,4 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	}
 	#endregion			// 함수
 }
-#endif			// #if FLURRY_ENABLE && FLURRY_ANALYTICS_ENABLE
+#endif			// #if FLURRY_MODULE_ENABLE && FLURRY_ANALYTICS_ENABLE
