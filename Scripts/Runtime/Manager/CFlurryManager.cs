@@ -16,6 +16,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	public virtual void Init(string a_oAPIKey, System.Action<CFlurryManager, bool> a_oCallback) {
 		CFunc.ShowLog("CFlurryManager.Init: {0}", KCDefine.B_LOG_COLOR_PLUGIN, a_oAPIKey);
 
+		// 초기화 가능 할 경우
 		if(!this.IsInit && CAccess.IsMobilePlatform()) {
 			CAccess.Assert(a_oAPIKey.ExIsValid());
 
