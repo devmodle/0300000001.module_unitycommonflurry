@@ -6,7 +6,7 @@
         "UnityModule.Common.Extension",
         "UnityModule.Common.Func",
         "UnityModule.Common.Utility",
-        "UnityModule.FlurrySDK"
+        "UnityModule.Flurry"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
