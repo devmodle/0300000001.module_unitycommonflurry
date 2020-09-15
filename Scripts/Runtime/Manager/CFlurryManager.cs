@@ -18,8 +18,6 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 
 		// 초기화 가능 할 경우
 		if(!this.IsInit && CAccess.IsMobilePlatform()) {
-			CAccess.Assert(a_oAPIKey.ExIsValid());
-
 			this.IsInit = true;
 			var oBuilder = new Flurry.Builder();
 
