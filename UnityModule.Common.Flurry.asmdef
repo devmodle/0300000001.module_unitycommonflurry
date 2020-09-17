@@ -6,6 +6,7 @@
         "UnityModule.Common.Extension",
         "UnityModule.Common.Func",
         "UnityModule.Common.Utility",
+        "UnityEngine.Purchasing",
         "UnityModule.Flurry"
     ],
     "includePlatforms": [],

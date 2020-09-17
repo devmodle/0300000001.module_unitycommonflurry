@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 #if FLURRY_MODULE_ENABLE
+#if UNITY_IOS || UNITY_ANDROID
 using FlurrySDK;
+#endif			// #if UNITY_IOS || UNITY_ANDROID
 
 //! 플러리 관리자
 public partial class CFlurryManager : CSingleton<CFlurryManager> {
@@ -16,8 +18,11 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	public virtual void Init(string a_oAPIKey, System.Action<CFlurryManager, bool> a_oCallback) {
 		CFunc.ShowLog("CFlurryManager.Init: {0}", KCDefine.B_LOG_COLOR_PLUGIN, a_oAPIKey);
 
+#if UNITY_IOS || UNITY_ANDROID
 		// 초기화 가능 할 경우
 		if(!this.IsInit && CAccess.IsMobilePlatform()) {
+			CAccess.Assert(a_oAPIKey.ExIsValid());
+
 			this.IsInit = true;
 			var oBuilder = new Flurry.Builder();
 
@@ -46,6 +51,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 
 			oBuilder.Build(a_oAPIKey);
 		}
+#endif			// #if UNITY_IOS || UNITY_ANDROID
 
 		a_oCallback?.Invoke(this, this.IsInit);
 	}

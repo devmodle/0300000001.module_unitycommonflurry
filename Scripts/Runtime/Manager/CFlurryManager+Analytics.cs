@@ -3,7 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 #if FLURRY_MODULE_ENABLE && FLURRY_ANALYTICS_ENABLE
+#if UNITY_IOS || UNITY_ANDROID
 using FlurrySDK;
+#endif			// #if UNITY_IOS || UNITY_ANDROID
+
+#if PURCHASE_MODULE_ENABLE
+using UnityEngine.Purchasing;
+#endif			// #if PURCHASE_MODULE_ENABLE
 
 //! 플러리 관리자
 public partial class CFlurryManager : CSingleton<CFlurryManager> {
@@ -12,10 +18,12 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	public void SetAnalyticsUserID(string a_oID) {
 		CFunc.ShowLog("CFlurryManager.SetAnalyticsUserID: {0}", KCDefine.B_LOG_COLOR_PLUGIN, a_oID);
 
+#if UNITY_IOS || UNITY_ANDROID
 		// 초기화 되었을 경우
 		if(this.IsInit) {
 			Flurry.SetUserId(a_oID);
 		}
+#endif			// #if UNITY_IOS || UNITY_ANDROID
 	}
 
 	//! 로그를 전송한다
@@ -36,6 +44,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	public void SendLog(string a_oName, Dictionary<string, string> a_oDataList) {
 		CFunc.ShowLog("CFlurryManager.SendLog: {0}, {1}", KCDefine.B_LOG_COLOR_PLUGIN, a_oName, a_oDataList);
 
+#if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
 #if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
 		// 초기화 되었을 경우
 		if(this.IsInit) {
@@ -56,7 +65,28 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 			Flurry.LogEvent(a_oName, oDataList);
 		}
 #endif			// #if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
+#endif			// #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
 	}
 	#endregion			// 함수
+
+	#region 조건부 함수
+#if PURCHASE_MODULE_ENABLE
+	//! 결제 로그를 전송한다
+	public void SendPurchaseLog(Product a_oProduct, int a_nNumProducts, Dictionary<string, string> a_oDataList) {
+		CAccess.Assert(a_oProduct != null);
+		CFunc.ShowLog("CFlurryManager.SendPurchaseLog: {0}", KCDefine.B_LOG_COLOR_PLUGIN, a_oProduct);
+
+#if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
+#if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
+		// 초기화 되었을 경우
+		if(this.IsInit) {
+			FlurrySDK.Flurry.LogPayment(a_oProduct.metadata.localizedTitle,
+				a_oProduct.definition.id, a_nNumProducts, (double)a_oProduct.metadata.localizedPrice, a_oProduct.metadata.isoCurrencyCode, a_oProduct.transactionID, a_oDataList);
+		}
+#endif			// #if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
+#endif			// #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
+	}
+#endif			// #if PURCHASE_MODULE_ENABLE
+	#endregion			// 조건부 함수
 }
 #endif			// #if FLURRY_MODULE_ENABLE && FLURRY_ANALYTICS_ENABLE
