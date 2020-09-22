@@ -43,7 +43,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	//! 로그를 전송한다
 	public void SendLog(string a_oName, Dictionary<string, string> a_oDataList) {
 		CFunc.ShowLog("CFlurryManager.SendLog: {0}, {1}", KCDefine.B_LOG_COLOR_PLUGIN, a_oName, a_oDataList);
-
+				
 #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
 #if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
 		// 초기화 되었을 경우

@@ -39,7 +39,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 
 			oBuilder.WithMessaging(false);
 			oBuilder.WithLogLevel(Flurry.LogLevel.VERBOSE);
-			oBuilder.WithAppVersion(CProjInfoTable.Instance.ProjInfo.m_oBuildVersion);
+			oBuilder.WithAppVersion(CProjInfoTable.Instance.ProjInfo.m_stBuildVersion.m_oVersion);
 			oBuilder.WithContinueSessionMillis((long)(KCDefine.U_TIMEOUT_FLURRY_NETWORK_CONNECTION * 1000.0f));
 #endif			// #if FLURRY_ANALYTICS_ENABLE
 
