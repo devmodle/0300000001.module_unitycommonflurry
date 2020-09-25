@@ -20,7 +20,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 
 #if UNITY_IOS || UNITY_ANDROID
 		// 초기화 가능 할 경우
-		if(!this.IsInit && CAccess.IsMobilePlatform()) {
+		if(!this.IsInit && CAccess.IsMobile()) {
 			CAccess.Assert(a_oAPIKey.ExIsValid());
 
 			this.IsInit = true;
