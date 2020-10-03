@@ -18,11 +18,11 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	public virtual void Init(string a_oAPIKey, System.Action<CFlurryManager, bool> a_oCallback) {
 		CFunc.ShowLog("CFlurryManager.Init: {0}", KCDefine.B_LOG_COLOR_PLUGIN, a_oAPIKey);
 
-#if UNITY_IOS || UNITY_ANDROID
-		// 초기화 가능 할 경우
-		if(!this.IsInit && CAccess.IsMobile()) {
-			CAccess.Assert(a_oAPIKey.ExIsValid());
-
+#if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
+		// 초기화 되었을 경우
+		if(this.IsInit) {
+			a_oCallback?.Invoke(this, true);
+		} else {
 			this.IsInit = true;
 			var oBuilder = new Flurry.Builder();
 
@@ -40,7 +40,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 			oBuilder.WithMessaging(false);
 			oBuilder.WithLogLevel(Flurry.LogLevel.VERBOSE);
 			oBuilder.WithAppVersion(CProjInfoTable.Instance.ProjInfo.m_stBuildVersion.m_oVersion);
-			oBuilder.WithContinueSessionMillis((long)(KCDefine.U_TIMEOUT_FLURRY_NETWORK_CONNECTION * 1000.0f));
+			oBuilder.WithContinueSessionMillis(KCDefine.U_TIMEOUT_FLURRY_NETWORK_CONNECTION);
 #endif			// #if FLURRY_ANALYTICS_ENABLE
 
 #if MSG_PACK_ENABLE
@@ -50,10 +50,11 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 #endif			// #if MSG_PACK_ENABLE
 
 			oBuilder.Build(a_oAPIKey);
+			a_oCallback?.Invoke(this, this.IsInit);
 		}
-#endif			// #if UNITY_IOS || UNITY_ANDROID
-
-		a_oCallback?.Invoke(this, this.IsInit);
+#else
+		a_oCallback?.Invoke(this, false);
+#endif			// #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
 	}
 	#endregion			// 함수
 }
