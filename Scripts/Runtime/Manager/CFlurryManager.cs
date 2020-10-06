@@ -23,7 +23,6 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 		if(this.IsInit) {
 			a_oCallback?.Invoke(this, true);
 		} else {
-			this.IsInit = true;
 			var oBuilder = new Flurry.Builder();
 
 #if FLURRY_ANALYTICS_ENABLE
@@ -50,6 +49,8 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 #endif			// #if MSG_PACK_ENABLE
 
 			oBuilder.Build(a_oAPIKey);
+
+			this.IsInit = true;
 			a_oCallback?.Invoke(this, this.IsInit);
 		}
 #else
