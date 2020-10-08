@@ -44,7 +44,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	public void SendLog(string a_oName, Dictionary<string, string> a_oDataList) {
 		CFunc.ShowLog("CFlurryManager.SendLog: {0}, {1}", KCDefine.B_LOG_COLOR_PLUGIN, a_oName, a_oDataList);
 				
-#if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
+#if UNITY_IOS || UNITY_ANDROID
 #if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
 		// 초기화 되었을 경우
 		if(this.IsInit) {
@@ -65,7 +65,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 			Flurry.LogEvent(a_oName, oDataList);
 		}
 #endif			// #if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
-#endif			// #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
+#endif			// #if UNITY_IOS || UNITY_ANDROID
 	}
 	#endregion			// 함수
 
@@ -76,7 +76,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 		CAccess.Assert(a_oProduct != null);
 		CFunc.ShowLog("CFlurryManager.SendPurchaseLog: {0}", KCDefine.B_LOG_COLOR_PLUGIN, a_oProduct);
 
-#if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
+#if UNITY_IOS || UNITY_ANDROID
 #if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
 		// 초기화 되었을 경우
 		if(this.IsInit) {
@@ -84,7 +84,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 				a_oProduct.definition.id, a_nNumProducts, (double)a_oProduct.metadata.localizedPrice, a_oProduct.metadata.isoCurrencyCode, a_oProduct.transactionID, a_oDataList);
 		}
 #endif			// #if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
-#endif			// #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
+#endif			// #if UNITY_IOS || UNITY_ANDROID
 	}
 #endif			// #if PURCHASE_MODULE_ENABLE
 	#endregion			// 조건부 함수

@@ -18,7 +18,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	public virtual void Init(string a_oAPIKey, System.Action<CFlurryManager, bool> a_oCallback) {
 		CFunc.ShowLog("CFlurryManager.Init: {0}", KCDefine.B_LOG_COLOR_PLUGIN, a_oAPIKey);
 
-#if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
+#if UNITY_IOS || UNITY_ANDROID
 		// 초기화 되었을 경우
 		if(this.IsInit) {
 			a_oCallback?.Invoke(this, true);
@@ -55,7 +55,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 		}
 #else
 		a_oCallback?.Invoke(this, false);
-#endif			// #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
+#endif			// #if UNITY_IOS || UNITY_ANDROID
 	}
 	#endregion			// 함수
 }
