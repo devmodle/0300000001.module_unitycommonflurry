@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 #if FLURRY_MODULE_ENABLE
-#if UNITY_IOS || UNITY_ANDROID
 using FlurrySDK;
-#endif			// #if UNITY_IOS || UNITY_ANDROID
 
 //! 플러리 관리자
 public partial class CFlurryManager : CSingleton<CFlurryManager> {
