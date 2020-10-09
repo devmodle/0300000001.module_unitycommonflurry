@@ -24,7 +24,8 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 			a_oCallback?.Invoke(this, true);
 		} else {
 			var oBuilder = new Flurry.Builder();
-
+			oBuilder.WithDataSaleOptOut(CCommonUserInfoStorage.Instance.UserInfo.IsAgree);
+			
 #if FLURRY_ANALYTICS_ENABLE
 #if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
 			oBuilder.WithLogEnabled(true);
@@ -41,12 +42,6 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 			oBuilder.WithAppVersion(CProjInfoTable.Instance.ProjInfo.m_stBuildVersion.m_oVersion);
 			oBuilder.WithContinueSessionMillis(KCDefine.U_TIMEOUT_FLURRY_NETWORK_CONNECTION);
 #endif			// #if FLURRY_ANALYTICS_ENABLE
-
-#if MSG_PACK_ENABLE
-			oBuilder.WithDataSaleOptOut(CCommonUserInfoStorage.Instance.UserInfo.IsAgree);
-#else
-			oBuilder.WithDataSaleOptOut(false);
-#endif			// #if MSG_PACK_ENABLE
 
 			oBuilder.Build(a_oAPIKey);
 

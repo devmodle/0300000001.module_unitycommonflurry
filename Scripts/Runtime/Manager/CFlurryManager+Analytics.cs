@@ -49,7 +49,6 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 		if(this.IsInit) {
 			var oDataList = a_oDataList ?? new Dictionary<string, string>();
 
-#if MSG_PACK_ENABLE
 			oDataList.ExAddValue(KCDefine.U_LOG_KEY_DEVICE_ID, 
 				CCommonAppInfoStorage.Instance.AppInfo.DeviceID);
 
@@ -66,7 +65,6 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 			oDataList.ExAddValue(KCDefine.U_LOG_KEY_INSTALL_TIME, 
 				CCommonAppInfoStorage.Instance.AppInfo.UTCInstallTime.ExToLongString());
 #endif			// #if AUTO_LOG_PARAMS_ENABLE
-#endif			// #if MSG_PACK_ENABLE
 
 			Flurry.LogEvent(a_oName, oDataList);
 		}
