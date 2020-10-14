@@ -23,10 +23,13 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 			a_oCallback?.Invoke(this, true);
 		} else {
 			var oBuilder = new Flurry.Builder();
+			oBuilder.WithMessaging(false);
+			oBuilder.WithLogLevel(Flurry.LogLevel.VERBOSE);
+			oBuilder.WithContinueSessionMillis(KCDefine.U_TIMEOUT_FLURRY_NETWORK_CONNECTION);
+			oBuilder.WithAppVersion(CProjInfoTable.Instance.ProjInfo.m_stBuildVersion.m_oVersion);
 			oBuilder.WithDataSaleOptOut(CCommonUserInfoStorage.Instance.UserInfo.IsAgree);
-			
-#if FLURRY_ANALYTICS_ENABLE
-#if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
+
+#if FLURRY_ANALYTICS_ENABLE && (ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD))
 			oBuilder.WithLogEnabled(true);
 			oBuilder.WithCrashReporting(true);
 			oBuilder.WithIncludeBackgroundSessionsInMetrics(true);
@@ -34,13 +37,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 			oBuilder.WithLogEnabled(false);
 			oBuilder.WithCrashReporting(false);
 			oBuilder.WithIncludeBackgroundSessionsInMetrics(false);
-#endif			// #if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
-
-			oBuilder.WithMessaging(false);
-			oBuilder.WithLogLevel(Flurry.LogLevel.VERBOSE);
-			oBuilder.WithAppVersion(CProjInfoTable.Instance.ProjInfo.m_stBuildVersion.m_oVersion);
-			oBuilder.WithContinueSessionMillis(KCDefine.U_TIMEOUT_FLURRY_NETWORK_CONNECTION);
-#endif			// #if FLURRY_ANALYTICS_ENABLE
+#endif			// #if FLURRY_ANALYTICS_ENABLE && (ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD))
 
 			oBuilder.Build(a_oAPIKey);
 
