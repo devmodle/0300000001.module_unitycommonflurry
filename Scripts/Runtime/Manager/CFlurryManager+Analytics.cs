@@ -77,11 +77,12 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	public void SendPurchaseLog(Product a_oProduct, 
 		int a_nNumProducts, Dictionary<string, string> a_oDataList) 
 	{
-		CAccess.Assert(a_oProduct != null);
 		CFunc.ShowLog("CFlurryManager.SendPurchaseLog: {0}", KCDefine.B_LOG_COLOR_PLUGIN, a_oProduct);
 
 #if FLURRY_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)
 #if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
+		CAccess.Assert(a_oProduct != null);
+		
 		// 초기화 되었을 경우
 		if(this.IsInit) {
 			FlurrySDK.Flurry.LogPayment(a_oProduct.metadata.localizedTitle,

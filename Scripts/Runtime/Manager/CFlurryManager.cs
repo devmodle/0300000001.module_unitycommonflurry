@@ -14,10 +14,11 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	#region 함수
 	//! 초기화
 	public virtual void Init(string a_oAPIKey, System.Action<CFlurryManager, bool> a_oCallback) {
-		CAccess.Assert(a_oAPIKey.ExIsValid());
 		CFunc.ShowLog("CFlurryManager.Init: {0}", KCDefine.B_LOG_COLOR_PLUGIN, a_oAPIKey);
 
 #if UNITY_IOS || UNITY_ANDROID
+		CAccess.Assert(a_oAPIKey.ExIsValid());
+		
 		// 초기화 되었을 경우
 		if(this.IsInit) {
 			a_oCallback?.Invoke(this, true);
