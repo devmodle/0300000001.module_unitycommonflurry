@@ -7,6 +7,10 @@ using FlurrySDK;
 
 //! 플러리 관리자
 public partial class CFlurryManager : CSingleton<CFlurryManager> {
+	#region 변수
+	private System.Action<CFlurryManager, bool> m_oInitCallback = null;
+	#endregion			// 변수
+
 	#region 프로퍼티
 	public bool IsInit { get; private set; } = false;
 	#endregion			// 프로퍼티
@@ -23,10 +27,12 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 		if(this.IsInit) {
 			a_oCallback?.Invoke(this, true);
 		} else {
+			m_oInitCallback = a_oCallback;
+
 			var oBuilder = new Flurry.Builder();
 			oBuilder.WithMessaging(false);
 			oBuilder.WithLogLevel(Flurry.LogLevel.VERBOSE);
-			oBuilder.WithContinueSessionMillis(KCDefine.U_TIMEOUT_FLURRY_NETWORK_CONNECTION);
+			oBuilder.WithContinueSessionMillis(KCDefine.U_TIMEOUT_FLURRY_M_NETWORK_CONNECTION);
 			oBuilder.WithAppVersion(CProjInfoTable.Instance.ProjInfo.m_stBuildVersion.m_oVersion);
 			oBuilder.WithDataSaleOptOut(CCommonUserInfoStorage.Instance.UserInfo.IsAgree);
 
@@ -41,14 +47,26 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 #endif			// #if FLURRY_ANALYTICS_ENABLE && (ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD))
 
 			oBuilder.Build(a_oAPIKey);
-
-			this.IsInit = true;
-			a_oCallback?.Invoke(this, this.IsInit);
+			this.ExLateCallFunc((a_oSender, a_oParams) => this.OnInit());
 		}
 #else
 		a_oCallback?.Invoke(this, false);
 #endif			// #if UNITY_IOS || UNITY_ANDROID
 	}
 	#endregion			// 함수
+
+	#region 조건부 함수
+#if UNITY_IOS || UNITY_ANDROID
+	//! 초기화 되었을 경우
+	private void OnInit() {
+		CScheduleManager.Instance.AddCallback(KCDefine.U_KEY_FLURRY_M_INIT_CALLBACK, () => {
+			CFunc.ShowLog("CFlurryManager.OnInit");
+			
+			this.IsInit = true;
+			m_oInitCallback?.Invoke(this, this.IsInit);
+		});
+	}
+#endif			// #if UNITY_IOS || UNITY_ANDROID
+	#endregion			// 조건부 함수
 }
 #endif			// #if FLURRY_MODULE_ENABLE
