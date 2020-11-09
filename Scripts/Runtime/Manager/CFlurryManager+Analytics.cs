@@ -30,9 +30,9 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	}
 
 	//! 로그를 전송한다
-	public void SendLog(string a_oName, string a_oParam, List<string> a_oDataList) {
+	public void SendLog(string a_oName, string a_oParams, List<string> a_oDataList) {
 		this.SendLog(a_oName, new Dictionary<string, string>() {
-			[a_oParam] = a_oDataList.ExToString(KCDefine.B_TOKEN_CSV_STRING)
+			[a_oParams] = a_oDataList.ExToString(KCDefine.B_TOKEN_CSV_STRING)
 		});
 	}
 
