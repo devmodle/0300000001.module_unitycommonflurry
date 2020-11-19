@@ -63,7 +63,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 			CFunc.ShowLog("CFlurryManager.OnInit");
 			
 			this.IsInit = true;
-			m_oInitCallback?.Invoke(this, this.IsInit);
+			CFunc.Invoke(ref m_oInitCallback, this, this.IsInit);
 		});
 	}
 #endif			// #if UNITY_IOS || UNITY_ANDROID
