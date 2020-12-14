@@ -33,8 +33,8 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 			oBuilder.WithMessaging(false);
 			oBuilder.WithLogLevel(Flurry.LogLevel.VERBOSE);
 			oBuilder.WithContinueSessionMillis(KCDefine.U_TIMEOUT_FLURRY_M_NETWORK_CONNECTION);
-			oBuilder.WithAppVersion(CProjInfoTable.Instance.ProjInfo.m_stBuildVersion.m_oVersion);
-			oBuilder.WithDataSaleOptOut(CCommonUserInfoStorage.Instance.UserInfo.IsAgree);
+			oBuilder.WithAppVersion(CProjInfoTable.Inst.ProjInfo.m_stBuildVersion.m_oVersion);
+			oBuilder.WithDataSaleOptOut(CCommonUserInfoStorage.Inst.UserInfo.IsAgree);
 
 #if FLURRY_ANALYTICS_ENABLE && (ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD))
 			oBuilder.WithLogEnabled(true);
@@ -59,7 +59,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 #if UNITY_IOS || UNITY_ANDROID
 	//! 초기화 되었을 경우
 	private void OnInit() {
-		CScheduleManager.Instance.AddCallback(KCDefine.U_KEY_FLURRY_M_INIT_CALLBACK, () => {
+		CScheduleManager.Inst.AddCallback(KCDefine.U_KEY_FLURRY_M_INIT_CALLBACK, () => {
 			CFunc.ShowLog("CFlurryManager.OnInit");
 			
 			this.IsInit = true;
