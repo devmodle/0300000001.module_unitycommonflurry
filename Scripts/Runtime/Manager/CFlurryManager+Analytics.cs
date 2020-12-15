@@ -14,7 +14,10 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	#region 함수
 	//! 분석 유저 식별자를 변경한다
 	public void SetAnalyticsUserID(string a_oID) {
-		CFunc.ShowLog("CFlurryManager.SetAnalyticsUserID: {0}", KCDefine.B_LOG_COLOR_PLUGIN, a_oID);
+		CAccess.Assert(a_oID.ExIsValid());
+
+		CFunc.ShowLog("CFlurryManager.SetAnalyticsUserID: {0}", 
+			KCDefine.B_LOG_COLOR_PLUGIN, a_oID);
 
 #if FLURRY_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)
 		// 초기화 되었을 경우
@@ -25,19 +28,9 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	}
 
 	//! 로그를 전송한다
-	public void SendLog(string a_oName) {
-		this.SendLog(a_oName, null);
-	}
-
-	//! 로그를 전송한다
-	public void SendLog(string a_oName, string a_oParams, List<string> a_oDataList) {
-		this.SendLog(a_oName, new Dictionary<string, string>() {
-			[a_oParams] = a_oDataList.ExToString(KCDefine.B_TOKEN_CSV_STRING)
-		});
-	}
-
-	//! 로그를 전송한다
 	public void SendLog(string a_oName, Dictionary<string, string> a_oDataList) {
+		CAccess.Assert(a_oName.ExIsValid());
+
 		CFunc.ShowLog("CFlurryManager.SendLog: {0}, {1}", 
 			KCDefine.B_LOG_COLOR_PLUGIN, a_oName, a_oDataList);
 				
@@ -74,19 +67,18 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	#region 조건부 함수
 #if PURCHASE_MODULE_ENABLE
 	//! 결제 로그를 전송한다
-	public void SendPurchaseLog(Product a_oProduct, 
-		int a_nNumProducts, Dictionary<string, string> a_oDataList) 
-	{
-		CFunc.ShowLog("CFlurryManager.SendPurchaseLog: {0}", KCDefine.B_LOG_COLOR_PLUGIN, a_oProduct);
+	public void SendPurchaseLog(Product a_oProduct, int a_nNumProducts) {
+		CAccess.Assert(a_oProduct != null && a_nNumProducts > KCDefine.B_VALUE_INT_0);
+
+		CFunc.ShowLog("CFlurryManager.SendPurchaseLog: {0}", 
+			KCDefine.B_LOG_COLOR_PLUGIN, a_oProduct);
 
 #if FLURRY_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)
 #if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
-		CAccess.Assert(a_oProduct != null);
-		
 		// 초기화 되었을 경우
 		if(this.IsInit) {
-			FlurrySDK.Flurry.LogPayment(a_oProduct.metadata.localizedTitle,
-				a_oProduct.definition.id, a_nNumProducts, (double)a_oProduct.metadata.localizedPrice, a_oProduct.metadata.isoCurrencyCode, a_oProduct.transactionID, a_oDataList);
+			Flurry.LogPayment(a_oProduct.metadata.localizedTitle,
+				a_oProduct.definition.id, a_nNumProducts, (double)a_oProduct.metadata.localizedPrice, a_oProduct.metadata.isoCurrencyCode, a_oProduct.transactionID, null);
 		}
 #endif			// #if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
 #endif			// #if FLURRY_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)
