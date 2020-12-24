@@ -48,7 +48,10 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 #endif			// #if FLURRY_ANALYTICS_ENABLE && (ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD))
 
 			oBuilder.Build(a_oAPIKey);
-			this.ExLateCallFunc((a_oSender, a_oParams) => this.OnInit());
+
+			this.ExLateCallFunc((a_oSender, a_oParams) => {
+				this.OnInit();
+			});
 		}
 #else
 		a_oCallback?.Invoke(this, false);
