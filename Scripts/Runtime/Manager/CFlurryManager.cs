@@ -17,9 +17,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 
 	#region 함수
 	//! 초기화
-	public virtual void Init(string a_oAPIKey, 
-		System.Action<CFlurryManager, bool> a_oCallback) 
-	{
+	public virtual void Init(string a_oAPIKey, System.Action<CFlurryManager, bool> a_oCallback) {
 		CAccess.Assert(a_oAPIKey.ExIsValid());
 		CFunc.ShowLog("CFlurryManager.Init: {0}", KCDefine.B_LOG_COLOR_PLUGIN, a_oAPIKey);
 
@@ -48,10 +46,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 #endif			// #if FLURRY_ANALYTICS_ENABLE && (ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD))
 
 			oBuilder.Build(a_oAPIKey);
-
-			this.ExLateCallFunc((a_oSender, a_oParams) => {
-				this.OnInit();
-			});
+			this.ExLateCallFunc((a_oSender, a_oParams) => this.OnInit());
 		}
 #else
 		a_oCallback?.Invoke(this, false);
@@ -65,8 +60,8 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	private void OnInit() {
 		CScheduleManager.Inst.AddCallback(KCDefine.U_KEY_FLURRY_M_INIT_CALLBACK, () => {
 			CFunc.ShowLog("CFlurryManager.OnInit");
-			
 			this.IsInit = true;
+			
 			CFunc.Invoke(ref m_oInitCallback, this, this.IsInit);
 		});
 	}
