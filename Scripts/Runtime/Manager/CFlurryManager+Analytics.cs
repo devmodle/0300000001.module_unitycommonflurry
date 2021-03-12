@@ -56,7 +56,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 #if PURCHASE_MODULE_ENABLE
 	//! 결제 로그를 전송한다
 	public void SendPurchaseLog(Product a_oProduct, int a_nNumProducts) {
-		CAccess.Assert(a_oProduct != null && a_nNumProducts > KCDefine.B_VALUE_INT_0);
+		CAccess.Assert(a_oProduct != null && a_nNumProducts > KCDefine.B_VALUE_0_INT);
 		CFunc.ShowLog("CFlurryManager.SendPurchaseLog: {0}", KCDefine.B_LOG_COLOR_PLUGIN, a_oProduct);
 
 #if FLURRY_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)
