@@ -7,7 +7,13 @@ using FlurrySDK;
 
 //! 플러리 관리자
 public partial class CFlurryManager : CSingleton<CFlurryManager> {
+	//! 매개 변수
+	public struct STParams {
+		public string a_oAPIKey;
+	}
+	
 	#region 변수
+	private STParams m_stParams;
 	private System.Action<CFlurryManager, bool> m_oInitCallback = null;
 	#endregion			// 변수
 
@@ -17,15 +23,16 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 
 	#region 함수
 	//! 초기화
-	public virtual void Init(string a_oAPIKey, System.Action<CFlurryManager, bool> a_oCallback) {
-		CAccess.Assert(a_oAPIKey.ExIsValid());
-		CFunc.ShowLog("CFlurryManager.Init: {0}", KCDefine.B_LOG_COLOR_PLUGIN, a_oAPIKey);
+	public virtual void Init(STParams a_stParams, System.Action<CFlurryManager, bool> a_oCallback) {
+		CAccess.Assert(a_stParams.m_oAPIKey.ExIsValid());
+		CFunc.ShowLog("CFlurryManager.Init: {0}", KCDefine.B_LOG_COLOR_PLUGIN, a_stParams.m_oAPIKey);
 
 #if UNITY_IOS || UNITY_ANDROID
 		// 초기화 되었을 경우
 		if(this.IsInit) {
 			a_oCallback?.Invoke(this, true);
 		} else {
+			m_stParams = a_stParams;
 			m_oInitCallback = a_oCallback;
 
 			var oBuilder = new Flurry.Builder();
