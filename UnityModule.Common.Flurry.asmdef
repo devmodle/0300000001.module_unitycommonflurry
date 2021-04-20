@@ -10,7 +10,8 @@
         "UnityModule.Common.Func",
         "UnityModule.Common.Utility",
         "UnityModule.Common.Externals",
-        "UnityEngine.Purchasing"
+        "UnityEngine.Purchasing",
+        "UnityEngine.Purchasing.Stores"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
