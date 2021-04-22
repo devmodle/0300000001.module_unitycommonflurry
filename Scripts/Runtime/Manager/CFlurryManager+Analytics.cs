@@ -69,7 +69,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 			string oTransactionID = a_oProduct.transactionID;
 
 			double dblPrice = decimal.ToDouble(a_oProduct.metadata.localizedPrice);
-			Flurry.LogPayment(oName, oID, a_nNumProducts, dblPrice, oCurrencyCode, oTransaction, null);
+			Flurry.LogPayment(oName, oID, a_nNumProducts, dblPrice, oCurrencyCode, oTransactionID, null);
 		}
 #endif			// #if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
 #endif			// #if FLURRY_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)
