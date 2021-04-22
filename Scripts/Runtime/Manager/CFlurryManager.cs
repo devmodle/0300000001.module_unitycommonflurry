@@ -9,7 +9,7 @@ using FlurrySDK;
 public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	//! 매개 변수
 	public struct STParams {
-		public string a_oAPIKey;
+		public string m_oAPIKey;
 	}
 	
 	#region 변수
@@ -52,7 +52,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 			oBuilder.WithIncludeBackgroundSessionsInMetrics(false);
 #endif			// #if FLURRY_ANALYTICS_ENABLE && (ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD))
 
-			oBuilder.Build(a_oAPIKey);
+			oBuilder.Build(a_stParams.m_oAPIKey);
 			this.ExLateCallFunc((a_oSender, a_oParams) => this.OnInit());
 		}
 #else
