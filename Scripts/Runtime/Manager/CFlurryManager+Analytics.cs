@@ -30,8 +30,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 		CAccess.Assert(a_oName.ExIsValid());
 		CFunc.ShowLog($"CFlurryManager.SendLog: {a_oName}, {a_oDataList}", KCDefine.B_LOG_COLOR_PLUGIN);
 				
-#if FLURRY_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)
-#if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
+#if (FLURRY_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)) && (ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD))
 		// 초기화 되었을 경우
 		if(this.IsInit) {
 			var oDataList = a_oDataList ?? new Dictionary<string, string>();
@@ -47,8 +46,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 
 			Flurry.LogEvent(a_oName, oDataList);
 		}
-#endif			// #if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
-#endif			// #if FLURRY_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)
+#endif			// #if (FLURRY_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)) && (ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD))
 	}
 	#endregion			// 함수
 
@@ -59,20 +57,13 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 		CAccess.Assert(a_oProduct != null && a_nNumProducts > KCDefine.B_VAL_0_INT);
 		CFunc.ShowLog($"CFlurryManager.SendPurchaseLog: {a_oProduct}, {a_nNumProducts}", KCDefine.B_LOG_COLOR_PLUGIN);
 
-#if FLURRY_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)
-#if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
+#if (FLURRY_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)) && (ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD))
 		// 초기화 되었을 경우
 		if(this.IsInit) {
-			string oID = a_oProduct.definition.id;
-			string oName = a_oProduct.metadata.localizedTitle;
-			string oCurrencyCode = a_oProduct.metadata.isoCurrencyCode;
-			string oTransactionID = a_oProduct.transactionID;
-
 			double dblPrice = decimal.ToDouble(a_oProduct.metadata.localizedPrice);
-			Flurry.LogPayment(oName, oID, a_nNumProducts, dblPrice, oCurrencyCode, oTransactionID, null);
+			Flurry.LogPayment(a_oProduct.metadata.localizedTitle, a_oProduct.definition.id, a_nNumProducts, dblPrice, a_oProduct.metadata.isoCurrencyCode, a_oProduct.transactionID, null);
 		}
-#endif			// #if ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD)
-#endif			// #if FLURRY_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)
+#endif			// #if (FLURRY_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)) && (ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD))
 	}
 #endif			// #if PURCHASE_MODULE_ENABLE
 	#endregion			// 조건부 함수
