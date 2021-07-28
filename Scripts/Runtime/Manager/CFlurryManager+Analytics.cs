@@ -34,7 +34,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 #if (FLURRY_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)) && (ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD))
 		// 초기화 되었을 경우
 		if(this.IsInit) {
-			var oDataDict = a_oDataDict ?? new Dictionary<string, string>();
+			var oDataDict = (a_oDataDict != null) ? a_oDataDict : new Dictionary<string, string>();
 
 			oDataDict.ExAddVal(KCDefine.L_LOG_KEY_DEVICE_ID, CCommonAppInfoStorage.Inst.AppInfo.DeviceID);
 			oDataDict.ExAddVal(KCDefine.L_LOG_KEY_PLATFORM, CCommonAppInfoStorage.Inst.Platform);
