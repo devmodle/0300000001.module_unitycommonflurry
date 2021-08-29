@@ -12,10 +12,15 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	public struct STParams {
 		public string m_oAPIKey;
 	}
+
+	//! 콜백 매개 변수
+	public struct STCallbackParams {
+		public System.Action<CFlurryManager, bool> m_oInitCallback;
+	}
 	
 	#region 변수
 	private STParams m_stParams;
-	private System.Action<CFlurryManager, bool> m_oInitCallback = null;
+	private STCallbackParams m_stCallbackParams;
 	#endregion			// 변수
 
 	#region 프로퍼티
@@ -24,17 +29,17 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 
 	#region 함수
 	//! 초기화
-	public virtual void Init(STParams a_stParams, System.Action<CFlurryManager, bool> a_oCallback) {
+	public virtual void Init(STParams a_stParams, STCallbackParams a_stCallbackParams) {
 		CAccess.Assert(a_stParams.m_oAPIKey.ExIsValid());
 		CFunc.ShowLog($"CFlurryManager.Init: {a_stParams.m_oAPIKey}", KCDefine.B_LOG_COLOR_PLUGIN);
 
 #if UNITY_IOS || UNITY_ANDROID
 		// 초기화 되었을 경우
 		if(this.IsInit) {
-			a_oCallback?.Invoke(this, true);
+			a_stCallbackParams.m_oInitCallback?.Invoke(this, true);
 		} else {
 			m_stParams = a_stParams;
-			m_oInitCallback = a_oCallback;
+			m_stCallbackParams = a_stCallbackParams;
 
 			var oBuilder = new Flurry.Builder();
 			oBuilder.WithMessaging(false);
@@ -57,7 +62,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 			this.ExLateCallFunc((a_oSender, a_oParams) => this.OnInit());
 		}
 #else
-		a_oCallback?.Invoke(this, false);
+		a_stCallbackParams.m_oInitCallback?.Invoke(this, false);
 #endif			// #if UNITY_IOS || UNITY_ANDROID
 	}
 	#endregion			// 함수
@@ -70,7 +75,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 			CFunc.ShowLog("CFlurryManager.OnInit");
 			this.IsInit = true;
 			
-			CFunc.Invoke(ref m_oInitCallback, this, this.IsInit);
+			CFunc.Invoke(ref m_stCallbackParams.m_oInitCallback, this, this.IsInit);
 		});
 	}
 #endif			// #if UNITY_IOS || UNITY_ANDROID
