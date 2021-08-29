@@ -15,7 +15,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 
 	//! 콜백 매개 변수
 	public struct STCallbackParams {
-		public System.Action<CFlurryManager, bool> m_oInitCallback;
+		public System.Action<CFlurryManager, bool> m_oCallback;
 	}
 	
 	#region 변수
@@ -36,7 +36,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 #if UNITY_IOS || UNITY_ANDROID
 		// 초기화 되었을 경우
 		if(this.IsInit) {
-			a_stCallbackParams.m_oInitCallback?.Invoke(this, true);
+			a_stCallbackParams.m_oCallback?.Invoke(this, true);
 		} else {
 			m_stParams = a_stParams;
 			m_stCallbackParams = a_stCallbackParams;
@@ -62,7 +62,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 			this.ExLateCallFunc((a_oSender, a_oParams) => this.OnInit());
 		}
 #else
-		a_stCallbackParams.m_oInitCallback?.Invoke(this, false);
+		a_stCallbackParams.m_oCallback?.Invoke(this, false);
 #endif			// #if UNITY_IOS || UNITY_ANDROID
 	}
 	#endregion			// 함수
@@ -75,7 +75,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 			CFunc.ShowLog("CFlurryManager.OnInit");
 			this.IsInit = true;
 			
-			CFunc.Invoke(ref m_stCallbackParams.m_oInitCallback, this, this.IsInit);
+			CFunc.Invoke(ref m_stCallbackParams.m_oCallback, this, this.IsInit);
 		});
 	}
 #endif			// #if UNITY_IOS || UNITY_ANDROID
