@@ -30,8 +30,8 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	#region 함수
 	//! 초기화
 	public virtual void Init(STParams a_stParams, STCallbackParams a_stCallbackParams) {
-		CAccess.Assert(a_stParams.m_oAPIKey.ExIsValid());
 		CFunc.ShowLog($"CFlurryManager.Init: {a_stParams.m_oAPIKey}", KCDefine.B_LOG_COLOR_PLUGIN);
+		CAccess.Assert(a_stParams.m_oAPIKey.ExIsValid());
 
 #if UNITY_IOS || UNITY_ANDROID
 		// 초기화 되었을 경우
@@ -71,10 +71,10 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 #if UNITY_IOS || UNITY_ANDROID
 	// 초기화 되었을 경우
 	private void OnInit() {
-		CScheduleManager.Inst.AddCallback(KCDefine.U_KEY_FLURRY_M_INIT_CALLBACK, () => {
-			CFunc.ShowLog("CFlurryManager.OnInit");
+		CFunc.ShowLog("CFlurryManager.OnInit");
+
+		CScheduleManager.Inst.AddCallback(KCDefine.U_KEY_FLURRY_M_INIT_CALLBACK, () => {	
 			this.IsInit = true;
-			
 			CFunc.Invoke(ref m_stCallbackParams.m_oCallback, this, this.IsInit);
 		});
 	}
