@@ -18,12 +18,12 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 		CFunc.ShowLog($"CFlurryManager.SetAnalyticsUserID: {a_oID}", KCDefine.B_LOG_COLOR_PLUGIN);
 		CAccess.Assert(a_oID.ExIsValid());
 
-#if FLURRY_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)
+#if (UNITY_IOS || UNITY_ANDROID) && FLURRY_ANALYTICS_ENABLE
 		// 초기화 되었을 경우
 		if(this.IsInit) {
 			Flurry.SetUserId(a_oID);
 		}
-#endif			// #if FLURRY_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)
+#endif			// #if (UNITY_IOS || UNITY_ANDROID) && FLURRY_ANALYTICS_ENABLE
 	}
 
 	//! 로그를 전송한다
@@ -31,7 +31,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 		CFunc.ShowLog($"CFlurryManager.SendLog: {a_oName}, {a_oDataDict}", KCDefine.B_LOG_COLOR_PLUGIN);
 		CAccess.Assert(a_oName.ExIsValid());
 				
-#if (FLURRY_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)) && (ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD))
+#if ((UNITY_IOS || UNITY_ANDROID) && FLURRY_ANALYTICS_ENABLE) && (ANALYTICS_TEST_ENABLE || ADHOC_BUILD || STORE_BUILD)
 		// 초기화 되었을 경우
 		if(this.IsInit) {
 			var oDataDict = a_oDataDict ?? new Dictionary<string, string>();
@@ -47,7 +47,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 
 			Flurry.LogEvent(a_oName, oDataDict);
 		}
-#endif			// #if (FLURRY_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)) && (ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD))
+#endif			// #if ((UNITY_IOS || UNITY_ANDROID) && FLURRY_ANALYTICS_ENABLE) && (ANALYTICS_TEST_ENABLE || ADHOC_BUILD || STORE_BUILD)
 	}
 	#endregion			// 함수
 
@@ -58,13 +58,13 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 		CFunc.ShowLog($"CFlurryManager.SendPurchaseLog: {a_oProduct}, {a_nNumProducts}", KCDefine.B_LOG_COLOR_PLUGIN);
 		CAccess.Assert(a_oProduct != null && a_nNumProducts > KCDefine.B_VAL_0_INT);
 
-#if (FLURRY_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)) && (ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD))
+#if ((UNITY_IOS || UNITY_ANDROID) && FLURRY_ANALYTICS_ENABLE) && (ANALYTICS_TEST_ENABLE || ADHOC_BUILD || STORE_BUILD)
 		// 초기화 되었을 경우
 		if(this.IsInit) {
 			double dblPrice = decimal.ToDouble(a_oProduct.metadata.localizedPrice);
 			Flurry.LogPayment(a_oProduct.metadata.localizedTitle, a_oProduct.definition.id, a_nNumProducts, dblPrice, a_oProduct.metadata.isoCurrencyCode, a_oProduct.transactionID, null);
 		}
-#endif			// #if (FLURRY_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)) && (ANALYTICS_TEST_ENABLE || (ADHOC_BUILD || STORE_BUILD))
+#endif			// #if ((UNITY_IOS || UNITY_ANDROID) && FLURRY_ANALYTICS_ENABLE) && (ANALYTICS_TEST_ENABLE || ADHOC_BUILD || STORE_BUILD)
 	}
 #endif			// #if PURCHASE_MODULE_ENABLE
 	#endregion			// 조건부 함수
