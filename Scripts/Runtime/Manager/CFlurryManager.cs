@@ -6,14 +6,14 @@ using UnityEngine.UI;
 #if FLURRY_MODULE_ENABLE
 using FlurrySDK;
 
-//! 플러리 관리자
+/** 플러리 관리자 */
 public partial class CFlurryManager : CSingleton<CFlurryManager> {
-	//! 매개 변수
+	/** 매개 변수 */
 	public struct STParams {
 		public string m_oAPIKey;
 	}
 
-	//! 콜백 매개 변수
+	/** 콜백 매개 변수 */
 	public struct STCallbackParams {
 		public System.Action<CFlurryManager, bool> m_oCallback;
 	}
@@ -28,7 +28,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	#endregion			// 프로퍼티
 
 	#region 함수
-	//! 초기화
+	/** 초기화 */
 	public virtual void Init(STParams a_stParams, STCallbackParams a_stCallbackParams) {
 		CFunc.ShowLog($"CFlurryManager.Init: {a_stParams.m_oAPIKey}", KCDefine.B_LOG_COLOR_PLUGIN);
 		CAccess.Assert(a_stParams.m_oAPIKey.ExIsValid());

@@ -10,10 +10,10 @@ using FlurrySDK;
 using UnityEngine.Purchasing;
 #endif			// #if PURCHASE_MODULE_ENABLE
 
-//! 플러리 관리자
+/** 플러리 관리자 */
 public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	#region 함수
-	//! 분석 유저 식별자를 변경한다
+	/** 분석 유저 식별자를 변경한다 */
 	public void SetAnalyticsUserID(string a_oID) {
 		CFunc.ShowLog($"CFlurryManager.SetAnalyticsUserID: {a_oID}", KCDefine.B_LOG_COLOR_PLUGIN);
 		CAccess.Assert(a_oID.ExIsValid());
@@ -26,7 +26,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 #endif			// #if (UNITY_IOS || UNITY_ANDROID) && FLURRY_ANALYTICS_ENABLE
 	}
 
-	//! 로그를 전송한다
+	/** 로그를 전송한다 */
 	public void SendLog(string a_oName, Dictionary<string, string> a_oDataDict) {
 		CFunc.ShowLog($"CFlurryManager.SendLog: {a_oName}, {a_oDataDict}", KCDefine.B_LOG_COLOR_PLUGIN);
 		CAccess.Assert(a_oName.ExIsValid());
@@ -53,7 +53,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 
 	#region 조건부 함수
 #if PURCHASE_MODULE_ENABLE
-	//! 결제 로그를 전송한다
+	/** 결제 로그를 전송한다 */
 	public void SendPurchaseLog(Product a_oProduct, int a_nNumProducts) {
 		CFunc.ShowLog($"CFlurryManager.SendPurchaseLog: {a_oProduct}, {a_nNumProducts}", KCDefine.B_LOG_COLOR_PLUGIN);
 		CAccess.Assert(a_oProduct != null && a_nNumProducts > KCDefine.B_VAL_0_INT);
