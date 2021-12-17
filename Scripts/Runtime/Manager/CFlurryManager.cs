@@ -73,7 +73,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	private void OnInit() {
 		CFunc.ShowLog("CFlurryManager.OnInit");
 
-		CScheduleManager.Inst.AddCallback(KCDefine.U_KEY_FLURRY_M_INIT_CALLBACK, () => {	
+		CScheduleManager.Inst.AddCallback(KCDefine.U_KEY_FLURRY_M_INIT_CALLBACK, () => {
 			this.IsInit = true;
 			CFunc.Invoke(ref m_stCallbackParams.m_oCallback, this, this.IsInit);
 		});
