@@ -72,11 +72,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	// 초기화 되었을 경우
 	private void OnInit() {
 		CFunc.ShowLog("CFlurryManager.OnInit");
-
-		CScheduleManager.Inst.AddCallback(KCDefine.U_KEY_FLURRY_M_INIT_CALLBACK, () => {
-			this.IsInit = true;
-			CFunc.Invoke(ref m_stCallbackParams.m_oCallback, this, this.IsInit);
-		});
+		CScheduleManager.Inst.AddCallback(KCDefine.U_KEY_FLURRY_M_INIT_CALLBACK, () => { this.IsInit = true; CFunc.Invoke(ref m_stCallbackParams.m_oCallback, this, this.IsInit); });
 	}
 #endif			// #if UNITY_IOS || UNITY_ANDROID
 	#endregion			// 조건부 함수
