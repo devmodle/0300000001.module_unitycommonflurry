@@ -48,7 +48,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 			oBuilder.WithAppVersion(CProjInfoTable.Inst.ProjInfo.m_stBuildVerInfo.m_oVer);
 			oBuilder.WithDataSaleOptOut(!CCommonAppInfoStorage.Inst.AppInfo.IsAgreeTracking);
 
-#if FLURRY_ANALYTICS_ENABLE && (ANALYTICS_TEST_ENABLE || STORE_BUILD)
+#if FLURRY_ANALYTICS_ENABLE && (ANALYTICS_TEST_ENABLE || STORE_DIST_BUILD)
 			oBuilder.WithLogEnabled(true);
 			oBuilder.WithCrashReporting(true);
 			oBuilder.WithIncludeBackgroundSessionsInMetrics(true);
@@ -56,7 +56,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 			oBuilder.WithLogEnabled(false);
 			oBuilder.WithCrashReporting(false);
 			oBuilder.WithIncludeBackgroundSessionsInMetrics(false);
-#endif			// #if FLURRY_ANALYTICS_ENABLE && (ANALYTICS_TEST_ENABLE || STORE_BUILD)
+#endif			// #if FLURRY_ANALYTICS_ENABLE && (ANALYTICS_TEST_ENABLE || STORE_DIST_BUILD)
 
 			oBuilder.Build(a_stParams.m_oAPIKey);
 			this.ExLateCallFunc((a_oSender) => this.OnInit());
