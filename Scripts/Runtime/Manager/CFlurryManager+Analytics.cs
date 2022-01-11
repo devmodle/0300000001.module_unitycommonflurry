@@ -41,7 +41,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 
 #if AUTO_LOG_PARAMS_ENABLE
 #if ANALYTICS_TEST_ENABLE || (DEBUG || DEVELOPMENT_BUILD)
-			oDataDict.ExAddVal(KCDefine.L_LOG_KEY_USER_TYPE, KCDefine.B_UNKNOWN_STR);
+			oDataDict.ExAddVal(KCDefine.L_LOG_KEY_USER_TYPE, KCDefine.B_TEXT_UNKNOWN);
 #else
 			oDataDict.ExAddVal(KCDefine.L_LOG_KEY_USER_TYPE, CCommonUserInfoStorage.Inst.UserInfo.UserType.ToString());
 #endif			// #if ANALYTICS_TEST_ENABLE || (DEBUG || DEVELOPMENT_BUILD)
