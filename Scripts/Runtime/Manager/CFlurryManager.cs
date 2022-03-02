@@ -8,19 +8,21 @@ using FlurrySDK;
 
 /** 플러리 관리자 */
 public partial class CFlurryManager : CSingleton<CFlurryManager> {
+	/** 콜백 */
+	public enum ECallback {
+		NONE = -1,
+		INIT,
+		[HideInInspector] MAX_VAL
+	}
+
 	/** 매개 변수 */
 	public struct STParams {
 		public string m_oAPIKey;
+		public Dictionary<ECallback, System.Action<CFlurryManager, bool>> m_oCallbackDict;
 	}
 
-	/** 콜백 매개 변수 */
-	public struct STCallbackParams {
-		public System.Action<CFlurryManager, bool> m_oCallback;
-	}
-	
 	#region 변수
 	private STParams m_stParams;
-	private STCallbackParams m_stCallbackParams;
 	#endregion			// 변수
 
 	#region 프로퍼티
@@ -29,17 +31,16 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 
 	#region 함수
 	/** 초기화 */
-	public virtual void Init(STParams a_stParams, STCallbackParams a_stCallbackParams) {
+	public virtual void Init(STParams a_stParams) {
 		CFunc.ShowLog($"CFlurryManager.Init: {a_stParams.m_oAPIKey}", KCDefine.B_LOG_COLOR_PLUGIN);
 		CAccess.Assert(a_stParams.m_oAPIKey.ExIsValid());
 
 #if UNITY_IOS || UNITY_ANDROID
 		// 초기화 되었을 경우
 		if(this.IsInit) {
-			a_stCallbackParams.m_oCallback?.Invoke(this, true);
+			a_stParams.m_oCallbackDict?.GetValueOrDefault(ECallback.INIT)?.Invoke(this, true);
 		} else {
 			m_stParams = a_stParams;
-			m_stCallbackParams = a_stCallbackParams;
 
 			var oBuilder = new Flurry.Builder();
 			oBuilder.WithMessaging(false);
@@ -62,7 +63,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 			this.ExLateCallFunc((a_oSender) => this.OnInit());
 		}
 #else
-		a_stCallbackParams.m_oCallback?.Invoke(this, false);
+		a_stParams.m_oCallbackDict?.GetValueOrDefault(ECallback.INIT)?.Invoke(this, false);
 #endif			// #if UNITY_IOS || UNITY_ANDROID
 	}
 	#endregion			// 함수
@@ -72,7 +73,11 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	// 초기화 되었을 경우
 	private void OnInit() {
 		CFunc.ShowLog("CFlurryManager.OnInit");
-		CScheduleManager.Inst.AddCallback(KCDefine.U_KEY_FLURRY_M_INIT_CALLBACK, () => { this.IsInit = true; CFunc.Invoke(ref m_stCallbackParams.m_oCallback, this, this.IsInit); });
+
+		CScheduleManager.Inst.AddCallback(KCDefine.U_KEY_FLURRY_M_INIT_CALLBACK, () => {
+			this.IsInit = true;
+			m_stParams.m_oCallbackDict?.GetValueOrDefault(ECallback.INIT)?.Invoke(this, this.IsInit);
+		});
 	}
 #endif			// #if UNITY_IOS || UNITY_ANDROID
 	#endregion			// 조건부 함수
