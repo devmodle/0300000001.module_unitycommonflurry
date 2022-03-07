@@ -47,7 +47,10 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 			oBuilder.WithLogLevel(Flurry.LogLevel.VERBOSE);
 			oBuilder.WithContinueSessionMillis(KCDefine.U_TIMEOUT_FLURRY_M_NETWORK_CONNECTION);
 			oBuilder.WithAppVersion(CProjInfoTable.Inst.ProjInfo.m_stBuildVerInfo.m_oVer);
+
+#if NEWTON_SOFT_JSON_MODULE_ENABLE			
 			oBuilder.WithDataSaleOptOut(!CCommonAppInfoStorage.Inst.AppInfo.IsAgreeTracking);
+#endif			// #if NEWTON_SOFT_JSON_MODULE_ENABLE
 
 #if FLURRY_ANALYTICS_ENABLE && (ANALYTICS_TEST_ENABLE || STORE_DIST_BUILD)
 			oBuilder.WithLogEnabled(true);
