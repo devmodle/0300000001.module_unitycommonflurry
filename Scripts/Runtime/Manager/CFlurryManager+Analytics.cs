@@ -62,7 +62,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 		// 초기화 되었을 경우
 		if(this.IsInit) {
 			double dblPrice = decimal.ToDouble(a_oProduct.metadata.localizedPrice);
-			Flurry.LogPayment(a_oProduct.metadata.localizedTitle, a_oProduct.definition.id, a_nNumProducts, dblPrice, a_oProduct.metadata.isoCurrencyCode, a_oProduct.transactionID, null);
+			Flurry.LogPayment(a_oProduct.metadata.localizedTitle, a_oProduct.definition.id, a_nNumProducts, dblPrice, a_oProduct.metadata.isoCurrencyCode, a_oProduct.transactionID, new Dictionary<string, string>());
 		}
 #endif			// #if ((UNITY_IOS || UNITY_ANDROID) && FLURRY_ANALYTICS_ENABLE) && (ANALYTICS_TEST_ENABLE || ADHOC_BUILD || STORE_BUILD)
 	}
