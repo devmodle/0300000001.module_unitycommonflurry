@@ -75,7 +75,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 #if UNITY_IOS || UNITY_ANDROID
 	// 초기화 되었을 경우
 	private void OnInit() {
-		CFunc.ShowLog("CFlurryManager.OnInit");
+		CFunc.ShowLog("CFlurryManager.OnInit", KCDefine.B_LOG_COLOR_PLUGIN);
 
 		CScheduleManager.Inst.AddCallback(KCDefine.U_KEY_FLURRY_M_INIT_CALLBACK, () => {
 			this.IsInit = true;

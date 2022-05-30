@@ -10,7 +10,7 @@ using FlurrySDK;
 using UnityEngine.Purchasing;
 #endif			// #if PURCHASE_MODULE_ENABLE
 
-/** 플러리 관리자 */
+/** 플러리 관리자 - 분석 */
 public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	#region 함수
 	/** 분석 유저 식별자를 변경한다 */
