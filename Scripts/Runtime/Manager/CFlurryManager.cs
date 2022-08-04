@@ -30,14 +30,13 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	}
 
 	#region 변수
-	private STParams m_stParams;
-
 	private Dictionary<EKey, bool> m_oBoolDict = new Dictionary<EKey, bool>() {
 		[EKey.IS_INIT] = false
 	};
 	#endregion			// 변수
 
 	#region 프로퍼티
+	public STParams Params { get; private set; }
 	public bool IsInit => m_oBoolDict[EKey.IS_INIT];
 	#endregion			// 프로퍼티
 
@@ -52,7 +51,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 		if(m_oBoolDict[EKey.IS_INIT]) {
 			a_stParams.m_oCallbackDict?.GetValueOrDefault(ECallback.INIT)?.Invoke(this, m_oBoolDict[EKey.IS_INIT]);
 		} else {
-			m_stParams = a_stParams;
+			this.Params = a_stParams;
 
 			var oBuilder = new Flurry.Builder();
 			oBuilder.WithMessaging(false);
@@ -91,7 +90,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 
 		CScheduleManager.Inst.AddCallback(KCDefine.U_KEY_FLURRY_M_INIT_CALLBACK, () => {
 			m_oBoolDict[EKey.IS_INIT] = true;
-			m_stParams.m_oCallbackDict?.GetValueOrDefault(ECallback.INIT)?.Invoke(this, m_oBoolDict[EKey.IS_INIT]);
+			this.Params.m_oCallbackDict?.GetValueOrDefault(ECallback.INIT)?.Invoke(this, m_oBoolDict[EKey.IS_INIT]);
 		});
 	}
 #endif			// #if UNITY_IOS || UNITY_ANDROID
