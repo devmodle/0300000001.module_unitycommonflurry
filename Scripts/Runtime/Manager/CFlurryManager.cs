@@ -24,7 +24,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	}
 
 	/** 매개 변수 */
-	public partial struct STParams {
+	public struct STParams {
 		public string m_oAPIKey;
 		public Dictionary<ECallback, System.Action<CFlurryManager, bool>> m_oCallbackDict;
 	}
