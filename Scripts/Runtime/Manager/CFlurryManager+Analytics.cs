@@ -21,7 +21,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 
 #if (UNITY_IOS || UNITY_ANDROID) && FLURRY_ANALYTICS_ENABLE
 		// 초기화 되었을 경우
-		if(this.BoolDict.GetValueOrDefault(EKey.IS_INIT)) {
+		if(m_oBoolDict.GetValueOrDefault(EKey.IS_INIT)) {
 			Flurry.SetUserId(a_oID);
 		}
 #endif			// #if (UNITY_IOS || UNITY_ANDROID) && FLURRY_ANALYTICS_ENABLE
@@ -34,7 +34,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 				
 #if ((UNITY_IOS || UNITY_ANDROID) && FLURRY_ANALYTICS_ENABLE) && (ANALYTICS_TEST_ENABLE || STORE_DIST_BUILD)
 		// 초기화 되었을 경우
-		if(this.BoolDict.GetValueOrDefault(EKey.IS_INIT)) {
+		if(m_oBoolDict.GetValueOrDefault(EKey.IS_INIT)) {
 			Flurry.LogEvent(a_oName, a_oDataDict ?? new Dictionary<string, string>());
 		}
 #endif			// #if ((UNITY_IOS || UNITY_ANDROID) && FLURRY_ANALYTICS_ENABLE) && (ANALYTICS_TEST_ENABLE || STORE_DIST_BUILD)
@@ -50,7 +50,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 
 #if ((UNITY_IOS || UNITY_ANDROID) && FLURRY_ANALYTICS_ENABLE) && (ANALYTICS_TEST_ENABLE || STORE_DIST_BUILD)
 		// 초기화 되었을 경우
-		if(this.BoolDict.GetValueOrDefault(EKey.IS_INIT)) {
+		if(m_oBoolDict.GetValueOrDefault(EKey.IS_INIT)) {
 			double dblPrice = decimal.ToDouble(a_oProduct.metadata.localizedPrice);
 			Flurry.LogPayment(a_oProduct.metadata.localizedTitle, a_oProduct.definition.id, a_nNumProducts, dblPrice, a_oProduct.metadata.isoCurrencyCode, a_oProduct.transactionID, a_oDataDict);
 		}
