@@ -77,6 +77,15 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	}
 	#endregion			// 함수
 
+	#region 클래스 함수
+	/** 매개 변수를 생성한다 */
+	public static STParams MakeParams(string a_oAPIKey, Dictionary<ECallback, System.Action<CFlurryManager, bool>> a_oCallbackDict) {
+		return new STParams() {
+			m_oAPIKey = a_oAPIKey, m_oCallbackDict = a_oCallbackDict
+		};
+	}
+	#endregion			// 클래스 함수
+
 	#region 조건부 함수
 #if UNITY_IOS || UNITY_ANDROID
 	// 초기화 되었을 경우
