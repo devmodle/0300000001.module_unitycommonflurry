@@ -31,12 +31,12 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 
 #region 변수
 	private Dictionary<EKey, bool> m_oBoolDict = new Dictionary<EKey, bool>();
-#endregion         // 변수               
+#endregion // 변수               
 
 #region 프로퍼티
 	public STParams Params { get; private set; }
 	public bool IsInit => m_oBoolDict.GetValueOrDefault(EKey.IS_INIT);
-#endregion         // 프로퍼티                 
+#endregion // 프로퍼티                 
 
 #region 함수
 	/** 초기화 */
@@ -66,16 +66,16 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 			oBuilder.WithLogEnabled(false);
 			oBuilder.WithCrashReporting(false);
 			oBuilder.WithIncludeBackgroundSessionsInMetrics(false);
-#endif         // #if FLURRY_ANALYTICS_ENABLE && (ANALYTICS_TEST_ENABLE || STORE_DIST_BUILD)                                                                                       
+#endif // #if FLURRY_ANALYTICS_ENABLE && (ANALYTICS_TEST_ENABLE || STORE_DIST_BUILD)                                                                                       
 
 			oBuilder.Build(a_stParams.m_oAPIKey);
 			this.ExLateCallFunc((a_oSender) => this.OnInit());
 		}
 #else
 		a_stParams.m_oCallbackDict?.GetValueOrDefault(ECallback.INIT)?.Invoke(this, false);
-#endif         // #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)                                                              
+#endif // #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)                                                              
 	}
-#endregion         // 함수               
+#endregion // 함수               
 
 #region 클래스 함수
 	/** 매개 변수를 생성한다 */
@@ -84,7 +84,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 			m_oAPIKey = a_oAPIKey, m_oCallbackDict = a_oCallbackDict ?? Dictionary<ECallback, System.Action<CFlurryManager, bool>>()
 		};
 	}
-#endregion         // 클래스 함수                   
+#endregion // 클래스 함수                   
 
 #region 조건부 함수
 #if UNITY_IOS || UNITY_ANDROID
@@ -97,7 +97,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 			this.Params.m_oCallbackDict?.GetValueOrDefault(ECallback.INIT)?.Invoke(this, m_oBoolDict.GetValueOrDefault(EKey.IS_INIT));
 		});
 	}
-#endif         // #if UNITY_IOS || UNITY_ANDROID                                           
-#endregion         // 조건부 함수                   
+#endif // #if UNITY_IOS || UNITY_ANDROID                                           
+#endregion // 조건부 함수                   
 }
-#endif         // #if FLURRY_MODULE_ENABLE                                     
+#endif // #if FLURRY_MODULE_ENABLE                                     
