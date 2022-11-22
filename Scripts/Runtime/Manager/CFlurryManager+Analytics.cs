@@ -9,7 +9,7 @@ using FlurrySDK;
 
 #if PURCHASE_MODULE_ENABLE
 using UnityEngine.Purchasing;
-#endif // #if PURCHASE_MODULE_ENABLE                                       
+#endif // #if PURCHASE_MODULE_ENABLE
 
 /** 플러리 관리자 - 분석 */
 public partial class CFlurryManager : CSingleton<CFlurryManager> {
@@ -24,7 +24,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 		if(m_oBoolDict.GetValueOrDefault(EKey.IS_INIT)) {
 			Flurry.SetUserId(a_oID);
 		}
-#endif // #if (UNITY_IOS || UNITY_ANDROID) && FLURRY_ANALYTICS_ENABLE                                                                        
+#endif // #if (UNITY_IOS || UNITY_ANDROID) && FLURRY_ANALYTICS_ENABLE
 	}
 
 	/** 로그를 전송한다 */
@@ -39,7 +39,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 		}
 #endif // #if ((UNITY_IOS || UNITY_ANDROID) && FLURRY_ANALYTICS_ENABLE) && (ANALYTICS_TEST_ENABLE || STORE_DIST_BUILD)                                                                                                                         
 	}
-#endregion // 함수               
+#endregion // 함수
 
 #region 조건부 함수
 #if PURCHASE_MODULE_ENABLE
@@ -56,7 +56,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 		}
 #endif // #if ((UNITY_IOS || UNITY_ANDROID) && FLURRY_ANALYTICS_ENABLE) && (ANALYTICS_TEST_ENABLE || STORE_DIST_BUILD)                                                                                                                         
 	}
-#endif // #if PURCHASE_MODULE_ENABLE                                       
-#endregion // 조건부 함수                   
+#endif // #if PURCHASE_MODULE_ENABLE
+#endregion // 조건부 함수
 }
-#endif // #if FLURRY_MODULE_ENABLE                                     
+#endif // #if FLURRY_MODULE_ENABLE
