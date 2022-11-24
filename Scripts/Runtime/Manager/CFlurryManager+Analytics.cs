@@ -37,7 +37,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 		if(m_oBoolDict.GetValueOrDefault(EKey.IS_INIT)) {
 			Flurry.LogEvent(a_oName, a_oDataDict ?? new Dictionary<string, string>());
 		}
-#endif // #if ((UNITY_IOS || UNITY_ANDROID) && FLURRY_ANALYTICS_ENABLE) && (ANALYTICS_TEST_ENABLE || STORE_DIST_BUILD)                                                                                                                         
+#endif // #if ((UNITY_IOS || UNITY_ANDROID) && FLURRY_ANALYTICS_ENABLE) && (ANALYTICS_TEST_ENABLE || STORE_DIST_BUILD)
 	}
 #endregion // 함수
 
@@ -54,7 +54,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 			double dblPrice = decimal.ToDouble(a_oProduct.metadata.localizedPrice);
 			Flurry.LogPayment(a_oProduct.metadata.localizedTitle, a_oProduct.definition.id, a_nNumProducts, dblPrice, a_oProduct.metadata.isoCurrencyCode, a_oProduct.transactionID, a_oDataDict);
 		}
-#endif // #if ((UNITY_IOS || UNITY_ANDROID) && FLURRY_ANALYTICS_ENABLE) && (ANALYTICS_TEST_ENABLE || STORE_DIST_BUILD)                                                                                                                         
+#endif // #if ((UNITY_IOS || UNITY_ANDROID) && FLURRY_ANALYTICS_ENABLE) && (ANALYTICS_TEST_ENABLE || STORE_DIST_BUILD)
 	}
 #endif // #if PURCHASE_MODULE_ENABLE
 #endregion // 조건부 함수

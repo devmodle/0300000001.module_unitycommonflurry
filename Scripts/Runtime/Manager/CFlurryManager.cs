@@ -66,14 +66,14 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 			oBuilder.WithLogEnabled(false);
 			oBuilder.WithCrashReporting(false);
 			oBuilder.WithIncludeBackgroundSessionsInMetrics(false);
-#endif // #if FLURRY_ANALYTICS_ENABLE && (ANALYTICS_TEST_ENABLE || STORE_DIST_BUILD)                                                                                       
+#endif // #if FLURRY_ANALYTICS_ENABLE && (ANALYTICS_TEST_ENABLE || STORE_DIST_BUILD)
 
 			oBuilder.Build(a_stParams.m_oAPIKey);
 			this.ExLateCallFunc((a_oSender) => this.OnInit());
 		}
 #else
 		a_stParams.m_oCallbackDict?.GetValueOrDefault(ECallback.INIT)?.Invoke(this, false);
-#endif // #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)                                                              
+#endif // #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
 	}
 #endregion // 함수
 
