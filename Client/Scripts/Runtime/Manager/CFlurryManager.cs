@@ -79,15 +79,6 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	}
 #endregion // 함수
 
-#region 클래스 함수
-	/** 매개 변수를 생성한다 */
-	public static STParams MakeParams(string a_oAPIKey, Dictionary<ECallback, System.Action<CFlurryManager, bool>> a_oCallbackDict = null) {
-		return new STParams() {
-			m_oAPIKey = a_oAPIKey, m_oCallbackDict = a_oCallbackDict ?? new Dictionary<ECallback, System.Action<CFlurryManager, bool>>()
-		};
-	}
-#endregion // 클래스 함수
-
 #region 조건부 함수
 #if UNITY_IOS || UNITY_ANDROID
 	// 초기화 되었을 경우
@@ -101,5 +92,17 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	}
 #endif // #if UNITY_IOS || UNITY_ANDROID
 #endregion // 조건부 함수
+}
+
+/** 플러리 관리자 - 팩토리 */
+public partial class CFlurryManager : CSingleton<CFlurryManager> {
+#region 클래스 함수
+	/** 매개 변수를 생성한다 */
+	public static STParams MakeParams(string a_oAPIKey, Dictionary<ECallback, System.Action<CFlurryManager, bool>> a_oCallbackDict = null) {
+		return new STParams() {
+			m_oAPIKey = a_oAPIKey, m_oCallbackDict = a_oCallbackDict ?? new Dictionary<ECallback, System.Action<CFlurryManager, bool>>()
+		};
+	}
+#endregion // 클래스 함수
 }
 #endif // #if FLURRY_MODULE_ENABLE
