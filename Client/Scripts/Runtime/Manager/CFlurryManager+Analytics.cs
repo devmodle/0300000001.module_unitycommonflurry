@@ -13,7 +13,7 @@ using UnityEngine.Purchasing;
 
 /** 플러리 관리자 - 분석 */
 public partial class CFlurryManager : CSingleton<CFlurryManager> {
-#region 함수
+	#region 함수
 	/** 분석 유저 식별자를 변경한다 */
 	public void SetAnalyticsUserID(string a_oID) {
 		CFunc.ShowLog($"CFlurryManager.SetAnalyticsUserID: {a_oID}", KCDefine.B_LOG_COLOR_PLUGIN);
@@ -31,7 +31,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	public void SendLog(string a_oName, Dictionary<string, string> a_oDataDict) {
 		CFunc.ShowLog($"CFlurryManager.SendLog: {a_oName}, {a_oDataDict}", KCDefine.B_LOG_COLOR_PLUGIN);
 		CAccess.Assert(a_oName.ExIsValid());
-				
+
 #if((UNITY_IOS || UNITY_ANDROID) && FLURRY_ANALYTICS_ENABLE) && (ANALYTICS_TEST_ENABLE || STORE_DIST_BUILD)
 		// 초기화 되었을 경우
 		if(m_oBoolDict[EKey.IS_INIT]) {
@@ -39,9 +39,9 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 		}
 #endif // #if ((UNITY_IOS || UNITY_ANDROID) && FLURRY_ANALYTICS_ENABLE) && (ANALYTICS_TEST_ENABLE || STORE_DIST_BUILD)
 	}
-#endregion // 함수
+	#endregion // 함수
 
-#region 조건부 함수
+	#region 조건부 함수
 #if PURCHASE_MODULE_ENABLE
 	/** 결제 로그를 전송한다 */
 	public void SendPurchaseLog(Product a_oProduct, int a_nNumProducts, Dictionary<string, string> a_oDataDict) {
@@ -57,6 +57,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 #endif // #if ((UNITY_IOS || UNITY_ANDROID) && FLURRY_ANALYTICS_ENABLE) && (ANALYTICS_TEST_ENABLE || STORE_DIST_BUILD)
 	}
 #endif // #if PURCHASE_MODULE_ENABLE
-#endregion // 조건부 함수
+	#endregion // 조건부 함수
 }
 #endif // #if FLURRY_MODULE_ENABLE
+
