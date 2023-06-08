@@ -9,13 +9,6 @@ using FlurrySDK;
 
 /** 플러리 관리자 */
 public partial class CFlurryManager : CSingleton<CFlurryManager> {
-	/** 식별자 */
-	private enum EKey {
-		NONE = -1,
-		IS_INIT,
-		[HideInInspector] MAX_VAL
-	}
-
 	/** 콜백 */
 	public enum ECallback {
 		NONE = -1,
@@ -29,15 +22,9 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 		public Dictionary<ECallback, System.Action<CFlurryManager, bool>> m_oCallbackDict;
 	}
 
-	#region 변수
-	private Dictionary<EKey, bool> m_oBoolDict = new Dictionary<EKey, bool>() {
-		[EKey.IS_INIT] = false
-	};
-	#endregion // 변수
-
 	#region 프로퍼티
 	public STParams Params { get; private set; }
-	public bool IsInit => m_oBoolDict[EKey.IS_INIT];
+	public bool IsInit { get; private set; } = false;
 	#endregion // 프로퍼티
 
 	#region 함수
@@ -48,8 +35,8 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 
 #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
 		// 초기화 되었을 경우
-		if(m_oBoolDict[EKey.IS_INIT]) {
-			a_stParams.m_oCallbackDict?.GetValueOrDefault(ECallback.INIT)?.Invoke(this, m_oBoolDict[EKey.IS_INIT]);
+		if(this.IsInit) {
+			a_stParams.m_oCallbackDict?.GetValueOrDefault(ECallback.INIT)?.Invoke(this, this.IsInit);
 		} else {
 			this.Params = a_stParams;
 
@@ -86,8 +73,8 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 		CFunc.ShowLog("CFlurryManager.OnInit", KCDefine.B_LOG_COLOR_PLUGIN);
 
 		CScheduleManager.Inst.AddCallback(KCDefine.U_KEY_FLURRY_M_INIT_CALLBACK, () => {
-			m_oBoolDict[EKey.IS_INIT] = true;
-			this.Params.m_oCallbackDict?.GetValueOrDefault(ECallback.INIT)?.Invoke(this, m_oBoolDict[EKey.IS_INIT]);
+			this.IsInit = true;
+			this.Params.m_oCallbackDict?.GetValueOrDefault(ECallback.INIT)?.Invoke(this, this.IsInit);
 		});
 	}
 #endif // #if UNITY_IOS || UNITY_ANDROID
