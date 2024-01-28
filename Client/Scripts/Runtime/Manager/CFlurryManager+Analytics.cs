@@ -20,7 +20,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 		CAccess.Assert(a_oID.ExIsValid());
 
 #if(UNITY_IOS || UNITY_ANDROID) && FLURRY_ANALYTICS_ENABLE
-		// 초기화 되었을 경우
+		// 초기화되었을 경우
 		if(this.IsInit) {
 			Flurry.SetUserId(a_oID);
 		}
@@ -33,7 +33,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 		CAccess.Assert(a_oName.ExIsValid());
 
 #if((UNITY_IOS || UNITY_ANDROID) && FLURRY_ANALYTICS_ENABLE) && (ANALYTICS_TEST_ENABLE || STORE_DIST_BUILD)
-		// 초기화 되었을 경우
+		// 초기화되었을 경우
 		if(this.IsInit) {
 			Flurry.LogEvent(a_oName, a_oDataDict ?? new Dictionary<string, string>());
 		}
@@ -49,7 +49,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 		CAccess.Assert(a_oProduct != null && a_nNumProducts > KCDefine.B_VAL_0_INT);
 
 #if((UNITY_IOS || UNITY_ANDROID) && FLURRY_ANALYTICS_ENABLE) && (ANALYTICS_TEST_ENABLE || STORE_DIST_BUILD)
-		// 초기화 되었을 경우
+		// 초기화되었을 경우
 		if(this.IsInit) {
 			double dblPrice = decimal.ToDouble(a_oProduct.metadata.localizedPrice);
 			Flurry.LogPayment(a_oProduct.metadata.localizedTitle, a_oProduct.definition.id, a_nNumProducts, dblPrice, a_oProduct.metadata.isoCurrencyCode, a_oProduct.transactionID, a_oDataDict);

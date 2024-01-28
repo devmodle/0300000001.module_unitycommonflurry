@@ -34,7 +34,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 		CAccess.Assert(a_stParams.m_oAPIKey.ExIsValid());
 
 #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
-		// 초기화 되었을 경우
+		// 초기화되었을 경우
 		if(this.IsInit) {
 			a_stParams.m_oCallbackDict?.GetValueOrDefault(ECallback.INIT)?.Invoke(this, this.IsInit);
 		} else {
@@ -68,7 +68,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 
 	#region 조건부 함수
 #if UNITY_IOS || UNITY_ANDROID
-	// 초기화 되었을 경우
+	// 초기화되었을 경우
 	private void OnInit() {
 		CFunc.ShowLog("CFlurryManager.OnInit", KCDefine.B_LOG_COLOR_PLUGIN);
 
