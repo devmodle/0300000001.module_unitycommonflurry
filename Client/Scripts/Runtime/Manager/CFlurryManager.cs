@@ -45,7 +45,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 			oBuilder.WithLogLevel(Flurry.LogLevel.VERBOSE);
 			oBuilder.WithAppVersion(CProjInfoTable.Inst.ProjInfo.m_stBuildVerInfo.m_oVer);
 			oBuilder.WithDataSaleOptOut(!CCommonAppInfoStorage.Inst.AppInfo.IsAgreeTracking);
-			oBuilder.WithContinueSessionMillis(KCDefine.U_TIMEOUT_FLURRY_M_NETWORK_CONNECTION);
+			oBuilder.WithContinueSessionMillis(KCDefine.B_TIMEOUT_FLURRY_M_NETWORK_CONNECTION);
 
 #if FLURRY_ANALYTICS_ENABLE && (ANALYTICS_TEST_ENABLE || STORE_DIST_BUILD)
 			oBuilder.WithLogEnabled(true);
@@ -72,7 +72,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	private void OnInit() {
 		CFunc.ShowLog("CFlurryManager.OnInit", KCDefine.B_LOG_COLOR_PLUGIN);
 
-		CScheduleManager.Inst.AddCallback(KCDefine.U_KEY_FLURRY_M_INIT_CALLBACK, () => {
+		CScheduleManager.Inst.AddCallback(KCDefine.B_KEY_FLURRY_M_INIT_CALLBACK, () => {
 			this.IsInit = true;
 			this.Params.m_oCallbackDict?.GetValueOrDefault(ECallback.INIT)?.Invoke(this, this.IsInit);
 		});
