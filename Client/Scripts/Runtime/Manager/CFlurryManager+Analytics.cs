@@ -17,7 +17,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	/** 분석 유저 식별자를 변경한다 */
 	public void SetAnalyticsUserID(string a_oID) {
 		CFunc.ShowLog($"CFlurryManager.SetAnalyticsUserID: {a_oID}", KCDefine.B_LOG_COLOR_PLUGIN);
-		CAccess.Assert(a_oID.ExIsValid());
+		CFunc.Assert(a_oID.ExIsValid());
 
 #if FLURRY_ANALYTICS_ENABLE && (UNITY_IOS || UNITY_ANDROID)
 		// 초기화되었을 경우
@@ -30,7 +30,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	/** 로그를 전송한다 */
 	public void SendLog(string a_oName, Dictionary<string, string> a_oDataDict) {
 		CFunc.ShowLog($"CFlurryManager.SendLog: {a_oName}, {a_oDataDict}", KCDefine.B_LOG_COLOR_PLUGIN);
-		CAccess.Assert(a_oName.ExIsValid());
+		CFunc.Assert(a_oName.ExIsValid());
 
 #if FLURRY_ANALYTICS_ENABLE && (ANALYTICS_TEST_ENABLE || STORE_DIST_BUILD) && (UNITY_IOS || UNITY_ANDROID)
 		// 초기화되었을 경우
@@ -46,7 +46,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	/** 결제 로그를 전송한다 */
 	public void SendPurchaseLog(Product a_oProduct, int a_nNumProducts, Dictionary<string, string> a_oDataDict) {
 		CFunc.ShowLog($"CFlurryManager.SendPurchaseLog: {a_oProduct}, {a_nNumProducts}", KCDefine.B_LOG_COLOR_PLUGIN);
-		CAccess.Assert(a_oProduct != null && a_nNumProducts > KCDefine.B_VAL_0_INT);
+		CFunc.Assert(a_oProduct != null && a_nNumProducts > KCDefine.B_VAL_0_INT);
 
 #if FLURRY_ANALYTICS_ENABLE && (ANALYTICS_TEST_ENABLE || STORE_DIST_BUILD) && (UNITY_IOS || UNITY_ANDROID)
 		// 초기화되었을 경우
