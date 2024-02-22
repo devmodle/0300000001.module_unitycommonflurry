@@ -36,7 +36,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
 		// 초기화되었을 경우
 		if(this.IsInit) {
-			a_stParams.m_oCallbackDict?.GetValueOrDefault(ECallback.INIT)?.Invoke(this, this.IsInit);
+			a_stParams.m_oCallbackDict?.ExGetVal(ECallback.INIT)?.Invoke(this, this.IsInit);
 		} else {
 			this.Params = a_stParams;
 
@@ -61,7 +61,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 			this.ExLateCallFunc((a_oSender) => this.OnInit());
 		}
 #else
-		a_stParams.m_oCallbackDict?.GetValueOrDefault(ECallback.INIT)?.Invoke(this, false);
+		a_stParams.m_oCallbackDict?.ExGetVal(ECallback.INIT)?.Invoke(this, false);
 #endif // #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
 	}
 	#endregion // 함수
@@ -74,7 +74,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 
 		CScheduleManager.Inst.AddCallback(KCDefine.B_KEY_FLURRY_M_INIT_CALLBACK, () => {
 			this.IsInit = true;
-			this.Params.m_oCallbackDict?.GetValueOrDefault(ECallback.INIT)?.Invoke(this, this.IsInit);
+			this.Params.m_oCallbackDict?.ExGetVal(ECallback.INIT)?.Invoke(this, this.IsInit);
 		});
 	}
 #endif // #if UNITY_IOS || UNITY_ANDROID
