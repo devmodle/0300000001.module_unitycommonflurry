@@ -78,7 +78,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 		});
 	}
 #endif // #if UNITY_IOS || UNITY_ANDROID
-	#endregion // 조건부 함수
+#endregion // 조건부 함수
 }
 
 /** 플러리 관리자 - 팩토리 */

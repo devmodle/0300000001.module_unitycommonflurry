@@ -57,7 +57,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 #endif // #if FLURRY_ANALYTICS_ENABLE && (ANALYTICS_TEST_ENABLE || STORE_DIST_BUILD) && (UNITY_IOS || UNITY_ANDROID)
 	}
 #endif // #if PURCHASE_MODULE_ENABLE
-	#endregion // 조건부 함수
+#endregion // 조건부 함수
 }
 #endif // #if FLURRY_MODULE_ENABLE
 
