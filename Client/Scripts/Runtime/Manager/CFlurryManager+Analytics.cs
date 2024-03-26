@@ -28,14 +28,14 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	}
 
 	/** 로그를 전송한다 */
-	public void SendLog(string a_oName, Dictionary<string, string> a_oDataDict) {
-		CFunc.ShowLog($"CFlurryManager.SendLog: {a_oName}, {a_oDataDict}", KCDefine.B_LOG_COLOR_PLUGIN);
+	public void SendLog(string a_oName, Dictionary<string, string> a_oDictData) {
+		CFunc.ShowLog($"CFlurryManager.SendLog: {a_oName}, {a_oDictData}", KCDefine.B_LOG_COLOR_PLUGIN);
 		CFunc.Assert(a_oName.ExIsValid());
 
 #if FLURRY_ANALYTICS_ENABLE && (ANALYTICS_TEST_ENABLE || STORE_DIST_BUILD) && (UNITY_IOS || UNITY_ANDROID)
 		// 초기화되었을 경우
 		if(this.IsInit) {
-			Flurry.LogEvent(a_oName, a_oDataDict ?? new Dictionary<string, string>());
+			Flurry.LogEvent(a_oName, a_oDictData ?? new Dictionary<string, string>());
 		}
 #endif // #if FLURRY_ANALYTICS_ENABLE && (ANALYTICS_TEST_ENABLE || STORE_DIST_BUILD) && (UNITY_IOS || UNITY_ANDROID)
 	}
@@ -44,7 +44,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 	#region 조건부 함수
 #if PURCHASE_MODULE_ENABLE
 	/** 결제 로그를 전송한다 */
-	public void SendPurchaseLog(Product a_oProduct, int a_nNumProducts, Dictionary<string, string> a_oDataDict) {
+	public void SendPurchaseLog(Product a_oProduct, int a_nNumProducts, Dictionary<string, string> a_oDictData) {
 		CFunc.ShowLog($"CFlurryManager.SendPurchaseLog: {a_oProduct}, {a_nNumProducts}", KCDefine.B_LOG_COLOR_PLUGIN);
 		CFunc.Assert(a_oProduct != null && a_nNumProducts > KCDefine.B_VAL_0_INT);
 
@@ -52,7 +52,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 		// 초기화되었을 경우
 		if(this.IsInit) {
 			double dblPrice = decimal.ToDouble(a_oProduct.metadata.localizedPrice);
-			Flurry.LogPayment(a_oProduct.metadata.localizedTitle, a_oProduct.definition.id, a_nNumProducts, dblPrice, a_oProduct.metadata.isoCurrencyCode, a_oProduct.transactionID, a_oDataDict);
+			Flurry.LogPayment(a_oProduct.metadata.localizedTitle, a_oProduct.definition.id, a_nNumProducts, dblPrice, a_oProduct.metadata.isoCurrencyCode, a_oProduct.transactionID, a_oDictData);
 		}
 #endif // #if FLURRY_ANALYTICS_ENABLE && (ANALYTICS_TEST_ENABLE || STORE_DIST_BUILD) && (UNITY_IOS || UNITY_ANDROID)
 	}
