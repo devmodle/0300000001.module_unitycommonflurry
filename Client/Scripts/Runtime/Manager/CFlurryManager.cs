@@ -44,7 +44,7 @@ public partial class CFlurryManager : CSingleton<CFlurryManager> {
 			oBuilder.WithMessaging(false);
 			oBuilder.WithLogLevel(Flurry.LogLevel.VERBOSE);
 			oBuilder.WithAppVersion(CProjInfoTable.Inst.ProjInfo.m_stBuildVerInfo.m_oVer);
-			oBuilder.WithDataSaleOptOut(!CCommonAppInfoStorage.Inst.AppInfo.IsAgreeTracking);
+			oBuilder.WithDataSaleOptOut(!CStorageInfoAppCommon.Inst.AppInfo.IsAgreeTracking);
 			oBuilder.WithContinueSessionMillis(KCDefine.B_TIMEOUT_FLURRY_M_NETWORK_CONNECTION);
 
 #if FLURRY_ANALYTICS_ENABLE && (ANALYTICS_TEST_ENABLE || STORE_DIST_BUILD)
